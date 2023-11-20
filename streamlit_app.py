@@ -20,28 +20,48 @@ filtered_df = df[(df["whitemom"] == "white") & (df["gender"] == "male")]
 
 # Scatter plot: Weight vs. Mage
 st.subheader("Weight vs. Mage")
-st.pyplot(plt.scatter(filtered_df['mage'], filtered_df['weight'], alpha=0.5))
-st.write("Scatter plot showing the relationship between Weight and Mage.")
+scatter_fig_mage = plt.figure()
+plt.scatter(filtered_df['mage'], filtered_df['weight'], alpha=0.5)
+plt.xlabel('Mage')
+plt.ylabel('Weight')
+plt.title('Weight vs. Mage')
+st.pyplot(scatter_fig_mage)
 
 # Scatter plot: Weight vs. Habit (Smoking Status)
 st.subheader("Weight vs. Habit (Smoking Status)")
-st.pyplot(plt.scatter(filtered_df['habit'], filtered_df['weight'], alpha=0.5))
-st.write("Scatter plot showing the relationship between Weight and Habit (Smoking Status).")
+scatter_fig_habit = plt.figure()
+plt.scatter(filtered_df['habit'], filtered_df['weight'], alpha=0.5)
+plt.xlabel('Habit (Smoking Status)')
+plt.ylabel('Weight')
+plt.title('Weight vs. Habit (Smoking Status)')
+st.pyplot(scatter_fig_habit)
 
 # Scatter plot: Weight vs. Weeks
 st.subheader("Weight vs. Weeks")
-st.pyplot(plt.scatter(filtered_df['weeks'], filtered_df['weight'], alpha=0.5))
-st.write("Scatter plot showing the relationship between Weight and Weeks.")
+scatter_fig_weeks = plt.figure()
+plt.scatter(filtered_df['weeks'], filtered_df['weight'], alpha=0.5)
+plt.xlabel('Weeks')
+plt.ylabel('Weight')
+plt.title('Weight vs. Weeks')
+st.pyplot(scatter_fig_weeks)
 
 # Scatter plot: Weight vs. Visits
 st.subheader("Weight vs. Visits")
-st.pyplot(plt.scatter(filtered_df['visits'], filtered_df['weight'], alpha=0.5))
-st.write("Scatter plot showing the relationship between Weight and Visits.")
+scatter_fig_visits = plt.figure()
+plt.scatter(filtered_df['visits'], filtered_df['weight'], alpha=0.5)
+plt.xlabel('Visits')
+plt.ylabel('Weight')
+plt.title('Weight vs. Visits')
+st.pyplot(scatter_fig_visits)
 
 # Scatter plot: Weight vs. Gained
 st.subheader("Weight vs. Gained")
-st.pyplot(plt.scatter(filtered_df['gained'], filtered_df['weight'], alpha=0.5))
-st.write("Scatter plot showing the relationship between Weight and Gained.")
+scatter_fig_gained = plt.figure()
+plt.scatter(filtered_df['gained'], filtered_df['weight'], alpha=0.5)
+plt.xlabel('Gained')
+plt.ylabel('Weight')
+plt.title('Weight vs. Gained')
+st.pyplot(scatter_fig_gained)
 
 # Data preprocessing
 st.sidebar.header("Data Preprocessing")
