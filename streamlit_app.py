@@ -89,6 +89,13 @@ for i, column in enumerate(numeric_columns):
 plt.tight_layout()
 st.pyplot(fig)
 
+
+# Convert 'weight' column to numeric and handle missing values
+filtered_df['weight'] = pd.to_numeric(filtered_df['weight'], errors='coerce')
+
+# Drop rows with missing 'weight' values
+filtered_df = filtered_df.dropna(subset=['weight'])
+
 # Linear regression analysis with statsmodels
 st.sidebar.header("Linear Regression Analysis")
 st.write("Now, let's perform linear regression using statsmodels.")
