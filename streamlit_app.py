@@ -27,16 +27,14 @@ plt.ylabel('Weight')
 plt.title('Weight vs. Mage')
 st.pyplot(scatter_fig_mage)
 
-
-# Bar plot: Weight vs. Habit (Smoking Status)
+# Scatter plot: Weight vs. Habit (Smoking Status)
 st.subheader("Weight vs. Habit (Smoking Status)")
-bar_fig_habit = plt.figure()
-sns.barplot(data=filtered_df, x='habit', y='weight')
+scatter_fig_habit = plt.figure()
+plt.scatter(filtered_df['habit'], filtered_df['weight'], alpha=0.5)
 plt.xlabel('Habit (Smoking Status)')
 plt.ylabel('Weight')
 plt.title('Weight vs. Habit (Smoking Status)')
-st.pyplot(bar_fig_habit)
-
+st.pyplot(scatter_fig_habit)
 
 # Scatter plot: Weight vs. Weeks
 st.subheader("Weight vs. Weeks")
@@ -89,25 +87,14 @@ for i, column in enumerate(numeric_columns):
 
 # Adjust spacing between subplots
 plt.tight_layout()
-st.pyplot(plt)
-
-# Correlation matrix
-st.subheader("Correlation Matrix")
-correlation_matrix = filtered_df.corr(numeric_only=True)
-plt.figure(figsize=(12, 8))
-sns.heatmap(correlation_matrix, annot=True, cmap="coolwarm", linewidths=0.5)
-plt.title("Correlation Matrix")
-st.pyplot(plt)
+st.pyplot(fig)
 
 # Linear regression analysis with statsmodels
 st.sidebar.header("Linear Regression Analysis")
 st.write("Now, let's perform linear regression using statsmodels.")
 
-# Convert the 'habit' column to numeric using one-hot encoding
+# One-hot encoding for habit
 filtered_df_encoded = pd.get_dummies(filtered_df, columns=["habit"], drop_first=True)
-
-# Convert 'weight' column to numeric if it's not already
-filtered_df_encoded['weight'] = pd.to_numeric(filtered_df_encoded['weight'])
 
 # Define independent and dependent variables
 X = filtered_df_encoded[["mage", "weeks", "visits", "habit_smoker"]]
@@ -124,4 +111,10 @@ results = model.fit()
 
 # Get the summary of the regression results
 st.subheader("Regression Results")
-st.text(results.summary())
+st.text(results.summary().as_text())
+
+
+
+
+
+
