@@ -91,19 +91,17 @@ st.write("Now, let's preprocess the data.")
 st.sidebar.header("Linear Regression Analysis")
 st.write("Now, let's perform linear regression using statsmodels.")
 
+# Create a copy of the filtered DataFrame to avoid SettingWithCopyWarning
+filtered_df = filtered_df.copy()
 
+# Convert columns to numeric
 filtered_df['weight'] = pd.to_numeric(filtered_df['weight'], errors='coerce')
 filtered_df['mage'] = pd.to_numeric(filtered_df['mage'], errors='coerce')
 filtered_df['weeks'] = pd.to_numeric(filtered_df['weeks'], errors='coerce')
 filtered_df['visits'] = pd.to_numeric(filtered_df['visits'], errors='coerce')
-
-
-filtered_df = filtered_df.dropna(subset=['weight', 'mage', 'weeks', 'visits'])
-
-
+filtered_df['weeks'].fillna(df['weeks'].mean(), inplace=True)
 # One-hot encoding for habit
 filtered_df_encoded = pd.get_dummies(filtered_df, columns=["habit"], drop_first=True)
-
 # Define independent and dependent variables
 X = filtered_df_encoded[["mage", "weeks", "visits", "habit_smoker"]]
 y = filtered_df_encoded["weight"]
@@ -116,6 +114,7 @@ model = sm.OLS(y, X)
 
 # Fit the model
 results = model.fit()
+
 
 # Get the summary of the regression results
 st.subheader("Regression Results")
