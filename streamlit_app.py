@@ -18,6 +18,26 @@ st.sidebar.header("Data Exploration")
 # Filter data by white mothers and male babies
 filtered_df = df[(df["whitemom"] == "white") & (df["gender"] == "male")]
 
+# Histograms
+st.subheader("Histograms")
+numeric_columns = filtered_df.select_dtypes(include=["number"]).columns
+
+# Set the overall figsize for the grid of histograms
+fig, axes = plt.subplots(nrows=len(numeric_columns), ncols=1, figsize=(8, 4 * len(numeric_columns)))
+
+# Iterate through numeric columns and create histograms
+for i, column in enumerate(numeric_columns):
+    ax = axes[i]
+    sns.histplot(data=filtered_df, x=column, bins=20, kde=True, ax=ax)
+    ax.set_title(f"Histogram of {column}")
+    ax.set_xlabel(column)
+    ax.set_ylabel("Frequency")
+
+# Adjust spacing between subplots
+plt.tight_layout()
+st.pyplot(fig)
+
+
 # Scatter plot: Weight vs. Mage
 st.subheader("Weight vs. Mage")
 scatter_fig_mage = plt.figure()
@@ -67,34 +87,18 @@ st.pyplot(scatter_fig_gained)
 st.sidebar.header("Data Preprocessing")
 st.write("Now, let's preprocess the data.")
 
+# Convert columns to numeric data type and handle missing values
+filtered_df['weight'] = pd.to_numeric(filtered_df['weight'], errors='coerce')
+filtered_df['mage'] = pd.to_numeric(filtered_df['mage'], errors='coerce')
+filtered_df['weeks'] = pd.to_numeric(filtered_df['weeks'], errors='coerce')
+filtered_df['visits'] = pd.to_numeric(filtered_df['visits'], errors='coerce')
+
+# Drop rows with missing values in any of the selected columns
+filtered_df = filtered_df.dropna(subset=['weight', 'mage', 'weeks', 'visits'])
+
+
 # Drop unnecessary columns
 filtered_df.drop(columns=["fage", "marital", "mature", "premie", "lowbirthweight"], inplace=True)
-
-# Histograms
-st.subheader("Histograms")
-numeric_columns = filtered_df.select_dtypes(include=["number"]).columns
-
-# Set the overall figsize for the grid of histograms
-fig, axes = plt.subplots(nrows=len(numeric_columns), ncols=1, figsize=(8, 4 * len(numeric_columns)))
-
-# Iterate through numeric columns and create histograms
-for i, column in enumerate(numeric_columns):
-    ax = axes[i]
-    sns.histplot(data=filtered_df, x=column, bins=20, kde=True, ax=ax)
-    ax.set_title(f"Histogram of {column}")
-    ax.set_xlabel(column)
-    ax.set_ylabel("Frequency")
-
-# Adjust spacing between subplots
-plt.tight_layout()
-st.pyplot(fig)
-
-
-# Convert 'weight' column to numeric and handle missing values
-filtered_df['weight'] = pd.to_numeric(filtered_df['weight'], errors='coerce')
-
-# Drop rows with missing 'weight' values
-filtered_df = filtered_df.dropna(subset=['weight'])
 
 # Linear regression analysis with statsmodels
 st.sidebar.header("Linear Regression Analysis")
