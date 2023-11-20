@@ -103,22 +103,15 @@ st.pyplot(plt)
 st.sidebar.header("Linear Regression Analysis")
 st.write("Now, let's perform linear regression using statsmodels.")
 
-# One-hot encoding for habit
+# Convert the 'habit' column to numeric using one-hot encoding
 filtered_df_encoded = pd.get_dummies(filtered_df, columns=["habit"], drop_first=True)
+
+# Convert 'weight' column to numeric if it's not already
+filtered_df_encoded['weight'] = pd.to_numeric(filtered_df_encoded['weight'])
 
 # Define independent and dependent variables
 X = filtered_df_encoded[["mage", "weeks", "visits", "habit_smoker"]]
 y = filtered_df_encoded["weight"]
-
-# Convert columns to appropriate data types (float)
-X["mage"] = X["mage"].astype(float)
-X["weeks"] = X["weeks"].astype(float)
-X["visits"] = X["visits"].astype(float)
-
-# Check and handle missing values (fill with mean)
-X["mage"].fillna(X["mage"].mean(), inplace=True)
-X["weeks"].fillna(X["weeks"].mean(), inplace=True)
-X["visits"].fillna(X["visits"].mean(), inplace=True)
 
 # Add a constant term (intercept) to the independent variables
 X = sm.add_constant(X)
