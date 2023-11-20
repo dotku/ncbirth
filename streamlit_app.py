@@ -4,9 +4,7 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
-from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error, r2_score
+
 # Load your dataset
 df = pd.read_csv("ncbirths.csv")
 
@@ -120,6 +118,9 @@ X["mage"].fillna(X["mage"].mean(), inplace=True)
 X["weeks"].fillna(X["weeks"].mean(), inplace=True)
 X["visits"].fillna(X["visits"].mean(), inplace=True)
 
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
 
 # Split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -148,18 +149,7 @@ st.write("Coefficients:", model.coef_)
 
 
 
-# Add a constant term (intercept) to the independent variables
-X = sm.add_constant(X)
 
-# Create a linear regression model with statsmodels
-model = sm.OLS(y, X)
-
-# Fit the model
-results = model.fit()
-
-# Get the summary of the regression results
-st.subheader("Regression Results")
-st.text(results.summary())
 
 
 
