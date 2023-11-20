@@ -108,6 +108,16 @@ filtered_df_encoded = pd.get_dummies(filtered_df, columns=["habit"], drop_first=
 X = filtered_df_encoded[["mage", "weeks", "visits", "habit_smoker"]]
 y = filtered_df_encoded["weight"]
 
+# Convert columns to appropriate data types (float)
+X["mage"] = X["mage"].astype(float)
+X["weeks"] = X["weeks"].astype(float)
+X["visits"] = X["visits"].astype(float)
+
+# Check and handle missing values (fill with mean)
+X["mage"].fillna(X["mage"].mean(), inplace=True)
+X["weeks"].fillna(X["weeks"].mean(), inplace=True)
+X["visits"].fillna(X["visits"].mean(), inplace=True)
+
 # Add a constant term (intercept) to the independent variables
 X = sm.add_constant(X)
 
@@ -120,7 +130,3 @@ results = model.fit()
 # Get the summary of the regression results
 st.subheader("Regression Results")
 st.text(results.summary())
-
-
-
-
