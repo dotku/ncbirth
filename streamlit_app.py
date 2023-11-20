@@ -87,22 +87,19 @@ st.pyplot(scatter_fig_gained)
 st.sidebar.header("Data Preprocessing")
 st.write("Now, let's preprocess the data.")
 
-# Convert columns to numeric data type and handle missing values
+# Linear regression analysis with statsmodels
+st.sidebar.header("Linear Regression Analysis")
+st.write("Now, let's perform linear regression using statsmodels.")
+
+
 filtered_df['weight'] = pd.to_numeric(filtered_df['weight'], errors='coerce')
 filtered_df['mage'] = pd.to_numeric(filtered_df['mage'], errors='coerce')
 filtered_df['weeks'] = pd.to_numeric(filtered_df['weeks'], errors='coerce')
 filtered_df['visits'] = pd.to_numeric(filtered_df['visits'], errors='coerce')
 
-# Drop rows with missing values in any of the selected columns
+
 filtered_df = filtered_df.dropna(subset=['weight', 'mage', 'weeks', 'visits'])
 
-
-# Drop unnecessary columns
-filtered_df.drop(columns=["fage", "marital", "mature", "premie", "lowbirthweight"], inplace=True)
-
-# Linear regression analysis with statsmodels
-st.sidebar.header("Linear Regression Analysis")
-st.write("Now, let's perform linear regression using statsmodels.")
 
 # One-hot encoding for habit
 filtered_df_encoded = pd.get_dummies(filtered_df, columns=["habit"], drop_first=True)
