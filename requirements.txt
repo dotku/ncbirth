@@ -1,8 +1,8 @@
 streamlit==0.84.1
-matplotlib=
+matplotlib
 seaborn==0.11.2
 pandas==1.3.3
 numpy==1.21.2
 statsmodels==0.13.0
-scikit-learn
+scikit-learn==1.3.2
 scipy
