@@ -118,6 +118,34 @@ X["mage"].fillna(X["mage"].mean(), inplace=True)
 X["weeks"].fillna(X["weeks"].mean(), inplace=True)
 X["visits"].fillna(X["visits"].mean(), inplace=True)
 
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Create and fit the linear regression model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Make predictions
+y_pred = model.predict(X_test)
+
+# Calculate evaluation metrics
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+# Display results
+st.header("Linear Regression Analysis (Using scikit-learn)")
+st.write("Here are the results of linear regression using scikit-learn:")
+st.write(f"Mean Squared Error (MSE): {mse}")
+st.write(f"R-squared (R2): {r2}")
+
+# You can also display coefficients and intercept
+st.subheader("Model Coefficients:")
+st.write("Intercept:", model.intercept_)
+st.write("Coefficients:", model.coef_)
+
+
+
 # Add a constant term (intercept) to the independent variables
 X = sm.add_constant(X)
 
