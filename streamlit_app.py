@@ -27,14 +27,16 @@ plt.ylabel('Weight')
 plt.title('Weight vs. Mage')
 st.pyplot(scatter_fig_mage)
 
-# Scatter plot: Weight vs. Habit (Smoking Status)
+
+# Bar plot: Weight vs. Habit (Smoking Status)
 st.subheader("Weight vs. Habit (Smoking Status)")
-scatter_fig_habit = plt.figure()
-plt.scatter(filtered_df['habit'], filtered_df['weight'], alpha=0.5)
+bar_fig_habit = plt.figure()
+sns.barplot(data=filtered_df, x='habit', y='weight')
 plt.xlabel('Habit (Smoking Status)')
 plt.ylabel('Weight')
 plt.title('Weight vs. Habit (Smoking Status)')
-st.pyplot(scatter_fig_habit)
+st.pyplot(bar_fig_habit)
+
 
 # Scatter plot: Weight vs. Weeks
 st.subheader("Weight vs. Weeks")
