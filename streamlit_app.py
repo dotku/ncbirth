@@ -4,15 +4,12 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
-from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error, r2_score
 
 # Load your dataset
 df = pd.read_csv("ncbirths.csv")
 
 # Title and description
-st.title("Regression Analysis with Streamlit")
+st.title("Linear Regression Analysis with Streamlit")
 st.write("This app explores a dataset and performs linear regression.")
 
 # Sidebar for data exploration
@@ -80,9 +77,9 @@ sns.heatmap(correlation_matrix, annot=True, cmap="coolwarm", linewidths=0.5)
 plt.title("Correlation Matrix")
 st.pyplot(plt)
 
-# P-values for regression
-st.sidebar.header("Regression Analysis")
-st.write("Now, let's perform linear regression and get p-values.")
+# Linear regression analysis with statsmodels
+st.sidebar.header("Linear Regression Analysis")
+st.write("Now, let's perform linear regression using statsmodels.")
 
 # One-hot encoding for habit
 filtered_df_encoded = pd.get_dummies(filtered_df, columns=["habit"], drop_first=True)
@@ -91,27 +88,19 @@ filtered_df_encoded = pd.get_dummies(filtered_df, columns=["habit"], drop_first=
 X = filtered_df_encoded[["mage", "weeks", "visits", "habit_smoker"]]
 y = filtered_df_encoded["weight"]
 
-# Split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-# Create a linear regression model
-model = LinearRegression()
-
-# Train the model
-model.fit(X_train, y_train)
-
-# Make predictions on the test data
-y_pred = model.predict(X_test)
-
 # Add a constant term (intercept) to the independent variables
 X = sm.add_constant(X)
 
 # Create a linear regression model with statsmodels
-model_stats = sm.OLS(y, X)
+model = sm.OLS(y, X)
 
 # Fit the model
-results = model_stats.fit()
+results = model.fit()
 
 # Get the summary of the regression results
 st.subheader("Regression Results")
 st.text(results.summary())
+
+
+
+
